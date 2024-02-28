@@ -1,0 +1,64 @@
+INFO: Seed: 1922763017
+INFO: Loaded 1 modules   (53083 inline 8-bit counters): 53083 [0x1274eb0, 0x1281e0b),
+INFO: Loaded 1 PC tables (53083 PCs): 53083 [0xde9830,0xeb8de0),
+/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_label_fuzzer: Running 1 inputs 100 time(s) each.
+Running: /d8abd834300aaf3aa6f8c4051e3f2cffca3ecc0038bd0011d4e1f30925fuzz-3
+=================================================================
+==1==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f6ca84d783f at pc 0x00000074d06c bp 0x7ffe1d134310 sp 0x7ffe1d134308
+WRITE of size 1 at 0x7f6ca84d783f thread T0
+SCARINESS: 46 (1-byte-write-stack-buffer-overflow)
+    #0 0x74d06b in FxEvaluateSubexpression imagemagick/MagickCore/fx.c:2368:45
+    #1 0x749669 in FxEvaluateChannelExpression imagemagick/MagickCore/fx.c:2993:10
+    #2 0x813898 in InterpretImageProperties imagemagick/MagickCore/property.c:3638:18
+    #3 0x984b52 in ReadLABELImage imagemagick/coders/label.c:127:12
+    #4 0x6b71da in ReadImage imagemagick/MagickCore/constitute.c:497:13
+    #5 0x5a79a5 in Magick::Image::read(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&) imagemagick/Magick++/lib/Image.cpp:4081:12
+    #6 0x51d8bb in fuzzEncoderWithStringFilename(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, unsigned char const*, unsigned long) imagemagick/Magick++/fuzz/encoder_utils.cc:10:11
+    #7 0x51d5a3 in LLVMFuzzerTestOneInput imagemagick/Magick++/fuzz/encoder_label_fuzzer.cc:10:10
+    #8 0x5474b0 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/libfuzzer/FuzzerLoop.cpp:515:13
+    #9 0x51e829 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/libfuzzer/FuzzerDriver.cpp:280:6
+    #10 0x52a174 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/libfuzzer/FuzzerDriver.cpp:703:9
+    #11 0x51decc in main /src/libfuzzer/FuzzerMain.cpp:20:10
+    #12 0x7f6caa9d282f in __libc_start_main /build/glibc-bfm8X4/glibc-2.23/csu/libc-start.c:291
+    #13 0x41d928 in _start
+Address 0x7f6ca84d783f is located in stack of thread T0 at offset 63 in frame
+    #0 0x7497ff in FxEvaluateSubexpression imagemagick/MagickCore/fx.c:2097
+  This frame has 3 object(s):
+    [32, 40) 'q' (line 2100)
+    [64, 4160) 'subexpression' (line 2100) <== Memory access at offset 63 underflows this variable
+    [4288, 8384) 'numeric' (line 2320)
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: stack-buffer-overflow (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_label_fuzzer+0x74d06b)
+Shadow bytes around the buggy address:
+  0x0fee15092eb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee15092ec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee15092ed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee15092ee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee15092ef0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fee15092f00: f1 f1 f1 f1 00 f2 f2[f2]00 00 00 00 00 00 00 00
+  0x0fee15092f10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee15092f20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee15092f30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee15092f40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fee15092f50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1==ABORTING

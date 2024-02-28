@@ -1,0 +1,103 @@
+INFO: Seed: 2698920997
+INFO: Loaded 1 modules   (52980 inline 8-bit counters): 52980 [0x1272c70, 0x127fb64),
+INFO: Loaded 1 PC tables (52980 PCs): 52980 [0xde7a10,0xeb6950),
+/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer: Running 1 inputs 100 time(s) each.
+Running: /91157b4c59d71e593d044d3df293a4d713f30bc63ded51e7dfe31b6b78fuzz-2
+=================================================================
+==1==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7f8c56d77c20 at pc 0x0000006f285d bp 0x7fffe88be610 sp 0x7fffe88be608
+WRITE of size 8 at 0x7f8c56d77c20 thread T0
+SCARINESS: 52 (8-byte-write-heap-buffer-overflow-far-from-bounds)
+    #0 0x6f285c in TracePoint imagemagick/MagickCore/draw.c:1666:30
+    #1 0x6f3258 in TraceEllipse imagemagick/MagickCore/draw.c:5409:5
+    #2 0x6efc6a in DrawImage imagemagick/MagickCore/draw.c:3119:9
+    #3 0x9b6d91 in ReadMVGImage imagemagick/coders/mvg.c:221:10
+    #4 0x6b716a in ReadImage imagemagick/MagickCore/constitute.c:497:13
+    #5 0x654425 in BlobToImage imagemagick/MagickCore/blob.c:466:13
+    #6 0x5a7c22 in Magick::Image::read(Magick::Blob const&) imagemagick/Magick++/lib/Image.cpp:4015:12
+    #7 0x51d6bf in LLVMFuzzerTestOneInput imagemagick/Magick++/fuzz/encoder_fuzzer.cc:43:11
+    #8 0x547400 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/libfuzzer/FuzzerLoop.cpp:515:13
+    #9 0x51e519 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/libfuzzer/FuzzerDriver.cpp:280:6
+    #10 0x529e64 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/libfuzzer/FuzzerDriver.cpp:703:9
+    #11 0x51dbbc in main /src/libfuzzer/FuzzerMain.cpp:20:10
+    #12 0x7f8c5bec582f in __libc_start_main /build/glibc-bfm8X4/glibc-2.23/csu/libc-start.c:291
+    #13 0x41d928 in _start
+0x7f8c56d77c20 is located 16 bytes to the right of 8930320-byte region [0x7f8c564f3800,0x7f8c56d77c10)
+allocated by thread T0 here:
+    #0 0x4e1b50 in realloc _asan_rtl_
+    #1 0x7b006b in ResizeMagickMemory imagemagick/MagickCore/memory.c:1260:9
+    #2 0x6ef57b in DrawImage imagemagick/MagickCore/draw.c:3051:42
+    #3 0x9b6d91 in ReadMVGImage imagemagick/coders/mvg.c:221:10
+    #4 0x6b716a in ReadImage imagemagick/MagickCore/constitute.c:497:13
+    #5 0x654425 in BlobToImage imagemagick/MagickCore/blob.c:466:13
+    #6 0x5a7c22 in Magick::Image::read(Magick::Blob const&) imagemagick/Magick++/lib/Image.cpp:4015:12
+    #7 0x51d6bf in LLVMFuzzerTestOneInput imagemagick/Magick++/fuzz/encoder_fuzzer.cc:43:11
+    #8 0x547400 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/libfuzzer/FuzzerLoop.cpp:515:13
+    #9 0x51e519 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/libfuzzer/FuzzerDriver.cpp:280:6
+    #10 0x529e64 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/libfuzzer/FuzzerDriver.cpp:703:9
+    #11 0x51dbbc in main /src/libfuzzer/FuzzerMain.cpp:20:10
+    #12 0x7f8c5bec582f in __libc_start_main /build/glibc-bfm8X4/glibc-2.23/csu/libc-start.c:291
+SUMMARY: AddressSanitizer: heap-buffer-overflow (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x6f285c)
+Shadow bytes around the buggy address:
+  0x0ff20ada6f30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff20ada6f40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff20ada6f50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff20ada6f60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff20ada6f70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0ff20ada6f80: 00 00 fa fa[fa]fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff20ada6f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff20ada6fa0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff20ada6fb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff20ada6fc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ff20ada6fd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1==ABORTING
++----------------------------------------Release Build Unsymbolized Stacktrace (diff)----------------------------------------+
+WRITE of size 8 at 0x7f8c56d77c20 thread T0
+SCARINESS: 52 (8-byte-write-heap-buffer-overflow-far-from-bounds)
+    #0 0x6f285c  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x6f285c)
+    #1 0x6f3258  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x6f3258)
+    #2 0x6efc6a  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x6efc6a)
+    #3 0x9b6d91  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x9b6d91)
+    #4 0x6b716a  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x6b716a)
+    #5 0x654425  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x654425)
+    #6 0x5a7c22  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x5a7c22)
+    #7 0x51d6bf  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x51d6bf)
+    #8 0x547400  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x547400)
+    #9 0x51e519  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x51e519)
+    #10 0x529e64  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x529e64)
+    #11 0x51dbbc  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x51dbbc)
+    #12 0x7f8c5bec582f  (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+    #13 0x41d928  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x41d928)
+0x7f8c56d77c20 is located 16 bytes to the right of 8930320-byte region [0x7f8c564f3800,0x7f8c56d77c10)
+allocated by thread T0 here:
+    #0 0x4e1b50  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x4e1b50)
+    #1 0x7b006b  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x7b006b)
+    #2 0x6ef57b  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x6ef57b)
+    #3 0x9b6d91  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x9b6d91)
+    #4 0x6b716a  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x6b716a)
+    #5 0x654425  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x654425)
+    #6 0x5a7c22  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x5a7c22)
+    #7 0x51d6bf  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x51d6bf)
+    #8 0x547400  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x547400)
+    #9 0x51e519  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x51e519)
+    #10 0x529e64  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x529e64)
+    #11 0x51dbbc  (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_6c758f2561112e17568a05126726c2ca513bfabc/revisions/encoder_mvg_fuzzer+0x51dbbc)
+    #12 0x7f8c5bec582f  (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)

@@ -1,0 +1,64 @@
+INFO: Seed: 1051778908
+INFO: Loaded 1 modules   (52623 inline 8-bit counters): 52623 [0x16deda8, 0x16ebb37),
+INFO: Loaded 1 PC tables (52623 PCs): 52623 [0x1342e60,0x1410750),
+/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_fe1d5c34955786983249f7efc0c66cfc4922c0ee/revisions/encoder_dcm_fuzzer: Running 1 inputs 100 time(s) each.
+Running: /fuzz-1
+==1==WARNING: MemorySanitizer: use-of-uninitialized-value
+    #0 0x6d199d in IsPixelGray imagemagick/MagickCore/pixel-accessor.h:522:55
+    #1 0x6d0fdf in IdentifyImageGray imagemagick/MagickCore/attribute.c:678:11
+    #2 0x7588dc in SetImageGray imagemagick/MagickCore/colorspace.c:1234:8
+    #3 0xd06b66 in ReadDCMImage imagemagick/coders/dcm.c:4148:9
+    #4 0x7ab360 in ReadImage imagemagick/MagickCore/constitute.c:497:13
+    #5 0x6d8818 in BlobToImage imagemagick/MagickCore/blob.c:469:13
+    #6 0x57f729 in Magick::Image::read(Magick::Blob const&) imagemagick/Magick++/lib/Image.cpp:4015:12
+    #7 0x49e6de in LLVMFuzzerTestOneInput imagemagick/Magick++/fuzz/encoder_fuzzer.cc:43:11
+    #8 0x4e5636 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/libfuzzer/FuzzerLoop.cpp:515:13
+    #9 0x49fac1 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/libfuzzer/FuzzerDriver.cpp:280:6
+    #10 0x4b3d16 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/libfuzzer/FuzzerDriver.cpp:703:9
+    #11 0x49ec01 in main /src/libfuzzer/FuzzerMain.cpp:20:10
+    #12 0x7f199ec9f82f in __libc_start_main /build/glibc-bfm8X4/glibc-2.23/csu/libc-start.c:291
+    #13 0x420138 in _start
+  Uninitialized value was stored to memory at
+    #0 0xd0c8e7 in SetPixelGreen imagemagick/MagickCore/pixel-accessor.h:759:54
+    #1 0xd0eb94 in ReadDCMPixels imagemagick/coders/dcm.c:2956:11
+    #2 0xd06b2c in ReadDCMImage imagemagick/coders/dcm.c:4145:20
+    #3 0x7ab360 in ReadImage imagemagick/MagickCore/constitute.c:497:13
+    #4 0x6d8818 in BlobToImage imagemagick/MagickCore/blob.c:469:13
+    #5 0x57f729 in Magick::Image::read(Magick::Blob const&) imagemagick/Magick++/lib/Image.cpp:4015:12
+    #6 0x49e6de in LLVMFuzzerTestOneInput imagemagick/Magick++/fuzz/encoder_fuzzer.cc:43:11
+    #7 0x4e5636 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/libfuzzer/FuzzerLoop.cpp:515:13
+    #8 0x49fac1 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/libfuzzer/FuzzerDriver.cpp:280:6
+    #9 0x4b3d16 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/libfuzzer/FuzzerDriver.cpp:703:9
+    #10 0x49ec01 in main /src/libfuzzer/FuzzerMain.cpp:20:10
+    #11 0x7f199ec9f82f in __libc_start_main /build/glibc-bfm8X4/glibc-2.23/csu/libc-start.c:291
+  Uninitialized value was stored to memory at
+    #0 0xd0ef6c in ReadDCMPixels imagemagick/coders/dcm.c:2941:28
+    #1 0xd06b2c in ReadDCMImage imagemagick/coders/dcm.c:4145:20
+    #2 0x7ab360 in ReadImage imagemagick/MagickCore/constitute.c:497:13
+    #3 0x6d8818 in BlobToImage imagemagick/MagickCore/blob.c:469:13
+    #4 0x57f729 in Magick::Image::read(Magick::Blob const&) imagemagick/Magick++/lib/Image.cpp:4015:12
+    #5 0x49e6de in LLVMFuzzerTestOneInput imagemagick/Magick++/fuzz/encoder_fuzzer.cc:43:11
+    #6 0x4e5636 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/libfuzzer/FuzzerLoop.cpp:515:13
+    #7 0x49fac1 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/libfuzzer/FuzzerDriver.cpp:280:6
+    #8 0x4b3d16 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/libfuzzer/FuzzerDriver.cpp:703:9
+    #9 0x49ec01 in main /src/libfuzzer/FuzzerMain.cpp:20:10
+    #10 0x7f199ec9f82f in __libc_start_main /build/glibc-bfm8X4/glibc-2.23/csu/libc-start.c:291
+  Uninitialized value was created by a heap deallocation
+    #0 0x44ff2c in cfree /src/llvm/projects/compiler-rt/lib/msan/msan_interceptors.cc:232
+    #1 0x9c2dac in RelinquishMagickMemory imagemagick/MagickCore/memory.c:1032:3
+    #2 0xd07a3d in ReadDCMImage imagemagick/coders/dcm.c:4021:38
+    #3 0x7ab360 in ReadImage imagemagick/MagickCore/constitute.c:497:13
+    #4 0x6d8818 in BlobToImage imagemagick/MagickCore/blob.c:469:13
+    #5 0x57f729 in Magick::Image::read(Magick::Blob const&) imagemagick/Magick++/lib/Image.cpp:4015:12
+    #6 0x49e6de in LLVMFuzzerTestOneInput imagemagick/Magick++/fuzz/encoder_fuzzer.cc:43:11
+    #7 0x4e5636 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) /src/libfuzzer/FuzzerLoop.cpp:515:13
+    #8 0x49fac1 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) /src/libfuzzer/FuzzerDriver.cpp:280:6
+    #9 0x4b3d16 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) /src/libfuzzer/FuzzerDriver.cpp:703:9
+    #10 0x49ec01 in main /src/libfuzzer/FuzzerMain.cpp:20:10
+    #11 0x7f199ec9f82f in __libc_start_main /build/glibc-bfm8X4/glibc-2.23/csu/libc-start.c:291
+SUMMARY: MemorySanitizer: use-of-uninitialized-value (/mnt/scratch0/clusterfuzz/slave-bot/builds/clusterfuzz-builds_imagemagick_fe1d5c34955786983249f7efc0c66cfc4922c0ee/revisions/encoder_dcm_fuzzer+0x6d199d)
+Unique heap origins: 678
+Stack depot allocated bytes: 91696
+Unique origin histories: 20
+History depot allocated bytes: 480
+Exiting
